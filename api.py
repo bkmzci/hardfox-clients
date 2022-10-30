@@ -38,7 +38,8 @@ def update_machine_status(machine_name,status):
 
 
 def add_subdomain_to_db(domain,subdomain):
-    telegram_req = requests.get("https://api.telegram.org/bot+"+telegram_api_key+"/sendMessage?chat_id=-880327745&text="+str(subdomain))
+    telegram_req = requests.get("https://api.telegram.org/bot"+telegram_api_key+"/sendMessage?chat_id=-880327745&text="+str(subdomain))
+    telegram_req.close()
     data = {"domain": domain, "subdomain": subdomain,"token":token}
     req = requests.post(API+"/subdomains",json=data)
     print(req.content)
