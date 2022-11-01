@@ -5,6 +5,7 @@ import time
 
 machine_name = api.create_machine()
 print("machine created!")
+subprocess.run("apt install unzip", shell=True)
 
 while True:
     print("wait for server!")
