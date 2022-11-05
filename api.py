@@ -58,25 +58,34 @@ def update_machine_status(machine_name,status):
 
 
 def add_subdomain_to_db(domain,subdomain):
-    while True:
-        try:
-            telegram_req = requests.get("https://api.telegram.org/bot"+telegram_api_key+"/sendMessage?chat_id=-880327745&text="+str(subdomain))
-            telegram_req.close()
-            break
-        except:
-            print("Telegram botuna ulasilamadi 10s timeout")
-            time.sleep(10)
+        data = {"domain": domain, "subdomain": subdomain, "token": token}
+        while True:
+            try:
+                req = requests.post(API + "/subdomains", json=data)
+                result = json.loads(req.text)
+                if "code" not in result:
+                    try:
+                        telegram_req = requests.get(
+                            "https://api.telegram.org/bot" + telegram_api_key + "/sendMessage?chat_id=-880327745&text=" + str(
+                                subdomain))
+                        telegram_req.close()
+
+                    except:
+                        print("Telegram botuna ulasilamadi 10s timeout")
+                        time.sleep(10)
+                else:
+                    print("subdomain zaten vardi")
+                req.close()
+                break
+            except:
+                print("Sunucuya ulasilamadi 10s timeout")
+                time.sleep(10)
+
+
             
 
-    data = {"domain": domain, "subdomain": subdomain,"token":token}
-    while True:
-        try:
-            req = requests.post(API+"/subdomains",json=data)
-            print(req.content)
-            req.close()
-            break
-        except:
-            print("Sunucuya ulasilamadi 10s timeout")
-            time.sleep(10)
 
 
+
+
+add_subdomain_to_db("epicgames.com","sil.epicgames.com")
