@@ -84,8 +84,3 @@ def add_subdomain_to_db(domain,subdomain):
 
             
 
-
-
-
-
-add_subdomain_to_db("epicgames.com","sil.epicgames.com")
